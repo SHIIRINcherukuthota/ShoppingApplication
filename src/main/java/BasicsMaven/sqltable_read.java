@@ -9,11 +9,11 @@ public class sqltable_read {
 //test
 
 	 static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-		   static final String DB_URL = "jdbc:mysql://localhost/learning";
+		   static final String DB_URL = "jdbc:mysql://remotemysql.com/4sgeFlzuqF";
 
 		   //  Database credentials
-		   static final String USER = "root";
-		   static final String PASS = "password";
+		   static final String USER = "4sgeFlzuqF";
+		   static final String PASS = "j5h4ZV0cyS";
 		   
 		   
 		   public void DB_read_controller() {
@@ -36,21 +36,21 @@ public class sqltable_read {
 		      stmt = conn.createStatement();
 	 
 	            // Create a query to use.
-	            String query = "SELECT purchase_list.customer_ID," +
-	            		"item_id, "+
-	            		 "quantity,"+
-	            		 "unit_price,"+ 
-	            		"customers."+
-	            		"customer_ID,"+
-	            		"first_name,"+
-	            		"last_name, "+
-	            		"address,email,"+
-	            		"phone, "+
-	            		"quantity * unit_price as 'each billing time purchase amount'"+
-	            		"  FROM learning.purchase_list "+
-	            		"INNER JOIN customers ON purchase_list.Customer_ID = customers.customer_ID "+
-	            		" Group by purchase_list.customer_id;";
-	 
+	            String query = "SELECT * FROM 4sgeFlzuqF.customers;" ;
+//	            		"item_id, "+
+//	            		 "quantity,"+
+//	            		 "unit_price,"+ 
+//	            		"customers."+
+//	            		"customer_ID,"+
+//	            		"first_name,"+
+//	            		"last_name, "+
+//	            		"address,email,"+
+//	            		"phone, "+
+//	            		"quantity * unit_price as 'each billing time purchase amount'"+
+//	            		"  FROM learning.purchase_list "+
+//	            		"INNER JOIN customers ON purchase_list.Customer_ID = customers.customer_ID "+
+//	            		" Group by purchase_list.customer_id;";
+//	 
 	            // Execute the query and get the result set, which contains
 	            // all the results returned from the database.
 	            ResultSet resultSet = stmt.executeQuery(query);
@@ -65,23 +65,23 @@ public class sqltable_read {
 	                System.out.println("Printing result...");
 	 
 	                // Now we can fetch the data by column name, save and use them!"item_id, "+
-	               int  customer_ID  = resultSet.getInt("customer_ID");
-	               double unit_price = resultSet.getDouble("unit_price");
-	               double quantity = resultSet.getDouble("quantity");
+	               int  customer_ID  = resultSet.getInt("cvustomer_ID");
+//	               double unit_price = resultSet.getDouble("unit_price");
+//	               double quantity = resultSet.getDouble("quantity");
 	               String address = resultSet.getString("address");
 	               String emaile = resultSet.getString("email");
            		String last_name = resultSet.getString("last_name");
            		String phone = resultSet.getString("phone");
-           		String each_billing_time_purchase_amount= resultSet.getString("each billing time purchase amount");
+           	//	String each_billing_time_purchase_amount= resultSet.getString("each billing time purchase amount");
         	
 	           
 	                System.out.println("customer_ID: " +customer_ID + 
-	                		 ",unit_price: " +  unit_price+
-	                		 ",quantity: "+quantity+
+//	                		 ",unit_price: " +  unit_price+
+//	                		 ",quantity: "+quantity+
 	                		 ",address: "+address +
 	                		 ",last_name: "+last_name+
 	                		  ",email: "+emaile+
-	                		 ",each billing time purchase amount: "+each_billing_time_purchase_amount+
+	                		// ",each billing time purchase amount: "+each_billing_time_purchase_amount+
 	                		 "phone:"+  phone   );
 	            }
 	 

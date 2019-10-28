@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 public class sqltable_read {
 	 private static final String Static = null;
-
+//test
 
 	 static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 		   static final String DB_URL = "jdbc:mysql://localhost/learning";

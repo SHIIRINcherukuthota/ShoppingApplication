@@ -39,7 +39,7 @@ public class sql_Statement_Generator {
 	  public  String columns_declarations(ArrayList<String> row_data_data_at_1,ArrayList<String> row_data_at_row_2,String table_name){
 			 int integer_value;
 			double double_value;
-			 String sql = "CREATE TABLE learning."+ table_name+ "(`id` INT NOT NULL AUTO_INCREMENT,";
+			 String sql = "CREATE TABLE 4sgeFlzuqF."+ table_name+ "(`id` INT NOT NULL AUTO_INCREMENT,";
 		   for( int i = 0;i<row_data_at_row_2.size();i++){
            String each_element = row_data_at_row_2.get(i); 
            System.out.println(each_element+"   from first  print  ");

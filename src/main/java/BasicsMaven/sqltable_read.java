@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 public class sqltable_read {
 	 private static final String Static = null;
 //test
@@ -61,29 +62,48 @@ public class sqltable_read {
 	            //      Artist: Also Varchar, so getString() again.
 	            //      Year: Int, so we use getInt().
 	            // For other types of columns, such as boolean or Date, we use the appropriate methods.
+	            
+	            ArrayList<customerModel> customer_table_to_db = new ArrayList<customerModel> ();
+	            
+	            
 	            while (resultSet.next()) {
-	                System.out.println("Printing result...");
-	 
-	                // Now we can fetch the data by column name, save and use them!"item_id, "+
-	               int  customer_ID  = resultSet.getInt("cvustomer_ID");
-//	               double unit_price = resultSet.getDouble("unit_price");
-//	               double quantity = resultSet.getDouble("quantity");
-	               String address = resultSet.getString("address");
-	               String emaile = resultSet.getString("email");
+	            	
+	            	
+	     int  customer_ID  = resultSet.getInt("cvustomer_ID");
+                String address = resultSet.getString("address");
+	            String emaile = resultSet.getString("email");
            		String last_name = resultSet.getString("last_name");
            		String phone = resultSet.getString("phone");
-           	//	String each_billing_time_purchase_amount= resultSet.getString("each billing time purchase amount");
-        	
-	           
-	                System.out.println("customer_ID: " +customer_ID + 
-//	                		 ",unit_price: " +  unit_price+
-//	                		 ",quantity: "+quantity+
-	                		 ",address: "+address +
-	                		 ",last_name: "+last_name+
-	                		  ",email: "+emaile+
-	                		// ",each billing time purchase amount: "+each_billing_time_purchase_amount+
-	                		 "phone:"+  phone   );
+           		String first_name = resultSet.getString("first_name");
+           		String gender = resultSet.getString("gender");
+           		java.sql.Date created_date = resultSet.getDate("created_date");
+           		java.util.Date cust_created_date = new java.util.Date(created_date.getTime());
+           		java.sql.Date updated_date = resultSet.getDate("updated_date");
+           		java.util.Date cust_updated_date = new java.util.Date(updated_date.getTime());
+           		
+           		customerModel each_customer_details = new customerModel();
+           		
+           		each_customer_details.setCustomer_ID(customer_ID);
+           		each_customer_details.setAddress(address);
+           		each_customer_details.setEmaile(emaile);
+           		each_customer_details.setFirst_name(first_name);
+           		each_customer_details.setLast_name(last_name);
+           		each_customer_details.setPhone(phone);
+           		each_customer_details.setGender(gender);
+           		each_customer_details.setCreated_date(cust_created_date);
+           		//forgot add
+           		each_customer_details.setUpdated_date(cust_updated_date);
+           		
+           		customer_table_to_db.add(each_customer_details);
+           		
 	            }
+	             
+	         for(customerModel customer_obj :customer_table_to_db ) {
+	            System.out.println(customer_obj);
+	          }
+	         
+	         
+	            
 	 
 	        } catch (ClassNotFoundException e) {
 	            e.printStackTrace();

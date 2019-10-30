@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 public class sqltable_read {
 	 private static final String Static = null;
 //test
@@ -37,21 +39,12 @@ public class sqltable_read {
 		      stmt = conn.createStatement();
 	 
 	            // Create a query to use.
-	            String query = "SELECT * FROM 4sgeFlzuqF.customers;" ;
-//	            		"item_id, "+
-//	            		 "quantity,"+
-//	            		 "unit_price,"+ 
-//	            		"customers."+
-//	            		"customer_ID,"+
-//	            		"first_name,"+
-//	            		"last_name, "+
-//	            		"address,email,"+
-//	            		"phone, "+
-//	            		"quantity * unit_price as 'each billing time purchase amount'"+
-//	            		"  FROM learning.purchase_list "+
-//	            		"INNER JOIN customers ON purchase_list.Customer_ID = customers.customer_ID "+
-//	            		" Group by purchase_list.customer_id;";
-//	 
+	            String query =  "SELECT item_id,quantity,unit_price, Customer_ID,first_name,last_name, address,created_date,updated_date, "
+	            		+"email,phone,  quantity * unit_price as ' each billing time purchase amount' FROM 4sgeFlzuqF.Database_learning_purchase_list "
+	            +"INNER JOIN customers ON Database_learning_purchase_list.Customer_ID = customers.cvustomer_ID "+
+	            		" ORDER BY Customer_ID";
+	            System.out.println(query);
+
 	            // Execute the query and get the result set, which contains
 	            // all the results returned from the database.
 	            ResultSet resultSet = stmt.executeQuery(query);
@@ -69,17 +62,22 @@ public class sqltable_read {
 	            while (resultSet.next()) {
 	            	
 	            	
-	     int  customer_ID  = resultSet.getInt("cvustomer_ID");
+	     int  customer_ID  = resultSet.getInt("customer_ID");
                 String address = resultSet.getString("address");
 	            String emaile = resultSet.getString("email");
            		String last_name = resultSet.getString("last_name");
            		String phone = resultSet.getString("phone");
            		String first_name = resultSet.getString("first_name");
-           		String gender = resultSet.getString("gender");
-           		java.sql.Date created_date = resultSet.getDate("created_date");
+//           		String gender = resultSet.getString("gender");
+          		java.sql.Date created_date = resultSet.getDate("created_date");
            		java.util.Date cust_created_date = new java.util.Date(created_date.getTime());
-           		java.sql.Date updated_date = resultSet.getDate("updated_date");
-           		java.util.Date cust_updated_date = new java.util.Date(updated_date.getTime());
+         		java.sql.Date updated_date = resultSet.getDate("updated_date");
+          		java.util.Date cust_updated_date = new java.util.Date(updated_date.getTime());
+           		int item_id=resultSet.getInt("item_id");
+           		int quantity=resultSet.getInt("quantity");
+           		int  each_billing_time_purchase_amount=resultSet.getInt("each billing time purchase amount");
+           		int unit_price=resultSet.getInt("unit_price");
+           		 
            		
            		customerModel each_customer_details = new customerModel();
            		
@@ -88,23 +86,42 @@ public class sqltable_read {
            		each_customer_details.setEmaile(emaile);
            		each_customer_details.setFirst_name(first_name);
            		each_customer_details.setLast_name(last_name);
+           		each_customer_details.setItem_id(item_id);
+           		each_customer_details.setQuantity(quantity);
+           		each_customer_details.setEach_billing_time_purchase_amount_id(each_billing_time_purchase_amount);
            		each_customer_details.setPhone(phone);
-           		each_customer_details.setGender(gender);
-           		each_customer_details.setCreated_date(cust_created_date);
+           		each_customer_details.setUnit_price(unit_price);
+//           		each_customer_details.setGender(gender);
+          		each_customer_details.setCreated_date(cust_created_date);
            		//forgot add
            		each_customer_details.setUpdated_date(cust_updated_date);
            		
            		customer_table_to_db.add(each_customer_details);
            		
 	            }
-	             
-	         for(customerModel customer_obj :customer_table_to_db ) {
-	            System.out.println(customer_obj);
-	          }
-	         
-	         
+
+	            Comparator<customerModel> custom_compaator =  new Comparator<customerModel>(){
+		             public int compare(customerModel one, customerModel two) {
+		            	 
+		            	 String data="";
+		            	 int return_method=0;
+                     if(data=="Created_date" ){
+                     if (one.getCreated_date() == null || two.getCreated_date() == null)
+		            	        return_method=0;
+		            	      return_method= one.getCreated_date().compareTo(two.getCreated_date());
+		        		 }
+					return return_method;
+	            };
 	            
-	 
+	         
+		        		 
+		        	
+		        		 
+		        		  Collections.sort(customer_table_to_db,custom_compaator);
+		        	      for(customerModel customer_obj :customer_table_to_db ) {
+		               System.out.println(customer_obj);
+		     	          }
+
 	        } catch (ClassNotFoundException e) {
 	            e.printStackTrace();
 	        } catch (SQLException e) {
@@ -124,7 +141,8 @@ public class sqltable_read {
 	                 se.printStackTrace();
 	              }//end finally try
 	           }//end try
-
+		
+	        		 
 	        }//end main
 	        }//end JDBCExample
 

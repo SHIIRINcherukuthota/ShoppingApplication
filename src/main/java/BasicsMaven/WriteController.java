@@ -32,7 +32,7 @@ public class WriteController {
 		      ArrayList<ArrayList<String>> row_excel=new ArrayList<ArrayList<String>>();
 			  
 		      String sql;
-		     row_excel= exceltohash.exceltoarray("/Users/venkatabalasumalisetty/Downloads/customers.xlsx");
+		     row_excel= exceltohash.exceltoarray("/Users/venkatabalasumalisetty/Desktop/Database_learning_purchase_list.xlsx");
 		     String cell1 = null;
 		     String cell2=null;
 		  int counter=0;
@@ -54,7 +54,7 @@ public class WriteController {
 		       }
 		       
 		       if (counter==1){
-		    	   String table_creation= new sql_Statement_Generator().columns_declarations(first_row_data,row_data,"customers");                           
+		    	   String table_creation= new sql_Statement_Generator().columns_declarations(first_row_data,row_data,"Database_learning_purchase_list");                           
 		    	   try{
 		    		   System.out.println(table_creation);
 		       	    stmt.executeUpdate(table_creation);
@@ -65,7 +65,7 @@ public class WriteController {
 		       }
 		      // System.out.println(Field_List);
 
-		       sql= "INSERT INTO 4sgeFlzuqF.customers ($_fields) VALUES ($_VALUES);";
+		       sql= "INSERT INTO 4sgeFlzuqF.Database_learning_purchase_list ($_fields) VALUES ($_VALUES);";
 
 		 String LIST_OF_VALUES= new sql_Statement_Generator().second_half_insert_sql(row_data);
 

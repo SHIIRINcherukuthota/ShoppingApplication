@@ -122,10 +122,13 @@ public class sql_Statement_Generator {
 				 //12-12-19
 				 SimpleDateFormat formatter_new = new SimpleDateFormat("YYYY-MM-dd");
 				 String s = formatter_new.format(date);
-				 
+				  if(i == row_data.size()-1){
+		    		  LIST_OF_VALUES1 = LIST_OF_VALUES1 + "'"+s+"'";
+		    		 
+		    	  }else{
 				 LIST_OF_VALUES1 = LIST_OF_VALUES1 +"'"+s+"',";//(STR_TO_DATE('"+row_data.get(i)+"','%d-%mm-%yy'))
-				
-				 continue;
+		    	  }
+				  continue; 
 			 }
 			 	
 			  

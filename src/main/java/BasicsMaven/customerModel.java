@@ -15,11 +15,14 @@ public class customerModel {
 	public String toString() {
 		//add Java Date Util to String of your foramt..
 		//https://stackoverflow.com/questions/5683728/convert-java-util-date-to-string
-		DateFormat format_date = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+		DateFormat format_date = new SimpleDateFormat("MM dd, yyyy", Locale.ENGLISH);
 		return "customerModel [customer_ID=" + customer_ID + ", address=" + address + ", emaile=" + emaile
-				+ ", last_name=" + last_name + ", phone=" + phone + ", first_name=" + first_name + ", gender=" + gender
-				+ " created_date= " +format_date.format(this.created_date)
+				+ ", last_name=" + last_name + ", phone=" + phone + ", first_name=" + first_name + 
+			"     created_date=    " +format_date.format(this.created_date)
 				+" updated_date= " +format_date.format(this.updated_date)+
+				"quantity= "+quantity+
+				"each billing time purchase amount_id= "+each_billing_time_purchase_amount_id+
+				"unit price= "+unit_price+
 				"]";
 	}
 	int  customer_ID  ;
@@ -32,7 +35,36 @@ private	String first_name ;
 private	String gender ;
 private Date created_date;
 private Date updated_date;
+private int quantity;
+private int each_billing_time_purchase_amount_id;
+private int unit_price;
+private int Item_id;
 
+
+public int getItem_id() {
+	return Item_id;
+}
+public void setItem_id(int item_id) {
+	Item_id = item_id;
+}
+public int getQuantity() {
+	return quantity;
+}
+public void setQuantity(int quantity) {
+	this.quantity = quantity;
+}
+public int getEach_billing_time_purchase_amount_id() {
+	return each_billing_time_purchase_amount_id;
+}
+public void setEach_billing_time_purchase_amount_id(int each_billing_time_purchase_amount_id) {
+	this.each_billing_time_purchase_amount_id = each_billing_time_purchase_amount_id;
+}
+public int getUnit_price() {
+	return unit_price;
+}
+public void setUnit_price(int unit_price) {
+	this.unit_price = unit_price;
+}
 /**
  * @return the updated_date
  */

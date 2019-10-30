@@ -5,8 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Collections;
 import java.util.Comparator;
+=======
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+
+import javafx.print.Collation;
+>>>>>>> origin/master
 public class sqltable_read {
 	 private static final String Static = null;
 //test
@@ -99,6 +107,7 @@ public class sqltable_read {
            		customer_table_to_db.add(each_customer_details);
            		
 	            }
+<<<<<<< HEAD
 
 	            Comparator<customerModel> custom_compaator =  new Comparator<customerModel>(){
 		             public int compare(customerModel one, customerModel two) {
@@ -112,6 +121,29 @@ public class sqltable_read {
 		        		 }
 					return return_method;
 	            };
+=======
+	            
+	            //To Sorty by First name
+	            //https://stackoverflow.com/a/47907804/4491572
+	            Collections.sort(customer_table_to_db,new Comparator<customerModel>() {
+				public int compare(customerModel customer1, customerModel cutomer2) {
+					// TODO Auto-generated method stub
+					
+					// TODO - SHirin to Imprivise the Sort Process
+					//Hint https://stackoverflow.com/questions/10876552/how-to-check-if-a-java-class-has-a-particular-method-in-it
+					int compatemethodsreturnvalue = customer1.getFirst_name().compareTo(cutomer2.getFirst_name());
+					return compatemethodsreturnvalue;
+				}
+	            });
+	            
+	            
+	            
+	         for(customerModel customer_obj :customer_table_to_db ) {
+	            System.out.println(customer_obj);
+	          }
+	         
+	         
+>>>>>>> origin/master
 	            
 	         
 		        		 

@@ -1,35 +1,34 @@
 package BasicsMaven;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.Collections;
 import java.util.Comparator;
-=======
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
 import javafx.print.Collation;
->>>>>>> origin/master
+
 public class sqltable_read {
-	 private static final String Static = null;
+	
 //test
 
-	 static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-		   static final String DB_URL = "jdbc:mysql://remotemysql.com/4sgeFlzuqF";
+	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	static final String DB_URL = "jdbc:mysql://remotemysql.com/4sgeFlzuqF";
 
-		   //  Database credentials
-		   static final String USER = "4sgeFlzuqF";
-		   static final String PASS = "j5h4ZV0cyS";
-		   
-		   
-		   public void DB_read_controller() {
+	// Database credentials
+	static final String USER = "4sgeFlzuqF";
+	static final String PASS = "j5h4ZV0cyS";
+
+	public void DB_read_controller() {
 			
 			 String dbController =   MAIN.args_inputs[0];
+			 String query_arg = MAIN.args_inputs[1];
 			 
 		   Connection conn = null;
 		   Statement stmt = null;
@@ -107,34 +106,49 @@ public class sqltable_read {
            		customer_table_to_db.add(each_customer_details);
            		
 	            }
-<<<<<<< HEAD
+
 
 	            Comparator<customerModel> custom_compaator =  new Comparator<customerModel>(){
 		             public int compare(customerModel one, customerModel two) {
-		            	 
-		            	 String data="";
-		            	 int return_method=0;
-                     if(data=="Created_date" ){
-                     if (one.getCreated_date() == null || two.getCreated_date() == null)
-		            	        return_method=0;
-		            	      return_method= one.getCreated_date().compareTo(two.getCreated_date());
-		        		 }
-					return return_method;
-	            };
-=======
+                          ///////////////////////////////////////////
+                          if(MAIN.args_inputs[1].equals("created_date")) {
+                        	  if (one.getCreated_date() == null || two.getCreated_date() == null) {
+  		            	        return 0;
+                        	  }
+		            	      return one.getCreated_date().compareTo(two.getCreated_date());
+		            	      }
+                          ///////////////////////////////////////////////////////////
+                          if(MAIN.args_inputs[1].equals("updated_date")) {
+                        	  if (one.getUpdated_date() == null || two.getUpdated_date() == null) {
+    		            	        return 0;
+                          	  }
+		            	      return one.getUpdated_date().compareTo(two.getUpdated_date());
+		            	      }
+                          ///////////////////////////////////////////////////////////////
+                          if(MAIN.args_inputs[1].equals("Customer_ID")) {
+		            	      return new Integer(one.getCustomer_ID()).compareTo(new Integer(two.getCustomer_ID()));
+		            	      }
+                          if(MAIN.args_inputs[1].equals("created_date")) {
+		            	      return one.getAddress().compareTo(two.getAddress());
+		            	      }
+                          if(MAIN.args_inputs[1].equals("created_date")) {
+		            	      return one.getAddress().compareTo(two.getAddress());
+		            	      }
+                          if(MAIN.args_inputs[1].equals("created_date")) {
+		            	      return one.getAddress().compareTo(two.getAddress());
+		            	      }
+                          if(MAIN.args_inputs[1].equals("created_date")) {
+		            	      return one.getAddress().compareTo(two.getAddress());
+		            	      }
+                          
+                          return 0;
+		        	
+	            }};
+
 	            
 	            //To Sorty by First name
 	            //https://stackoverflow.com/a/47907804/4491572
-	            Collections.sort(customer_table_to_db,new Comparator<customerModel>() {
-				public int compare(customerModel customer1, customerModel cutomer2) {
-					// TODO Auto-generated method stub
-					
-					// TODO - SHirin to Imprivise the Sort Process
-					//Hint https://stackoverflow.com/questions/10876552/how-to-check-if-a-java-class-has-a-particular-method-in-it
-					int compatemethodsreturnvalue = customer1.getFirst_name().compareTo(cutomer2.getFirst_name());
-					return compatemethodsreturnvalue;
-				}
-	            });
+	            Collections.sort(customer_table_to_db,custom_compaator);
 	            
 	            
 	            
@@ -143,12 +157,7 @@ public class sqltable_read {
 	          }
 	         
 	         
->>>>>>> origin/master
-	            
-	         
-		        		 
-		        	
-		        		 
+
 		        		  Collections.sort(customer_table_to_db,custom_compaator);
 		        	      for(customerModel customer_obj :customer_table_to_db ) {
 		               System.out.println(customer_obj);
@@ -176,9 +185,4 @@ public class sqltable_read {
 		
 	        		 
 	        }//end main
-	        }//end JDBCExample
-
-
-
-
-
+	        }// end JDBCExample

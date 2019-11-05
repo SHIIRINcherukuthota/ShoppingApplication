@@ -14,7 +14,7 @@ import java.util.Comparator;
 
 import javafx.print.Collation;
 
-public class sqltable_read {
+public class sqltable_read  {
 	
 //test
 
@@ -37,20 +37,20 @@ public class sqltable_read {
 		      Class.forName("com.mysql.jdbc.Driver");
 
 		      //STEP 3: Open a connection
-		      System.out.println("Connecting to a selected database...");
+		    //  System.out.println("Connecting to a selected database...");
 		      conn = DriverManager.getConnection(DB_URL, USER, PASS);
-		      System.out.println("Connected database successfully...");
+		     // System.out.println("Connected database successfully...");
 		      
 		      //STEP 4: Execute a query
 		     
 		      stmt = conn.createStatement();
 	 
 	            // Create a query to use.
-	            String query =  "SELECT item_id,quantity,unit_price, Customer_ID,first_name,last_name, address,created_date,updated_date, "
+	            String query =  "SELECT item_id,quantity,unit_price,bill_number, Customer_ID,first_name,last_name, address,created_date,updated_date, "
 	            		+"email,phone,  quantity * unit_price as ' each billing time purchase amount' FROM 4sgeFlzuqF.Database_learning_purchase_list "
 	            +"INNER JOIN customers ON Database_learning_purchase_list.Customer_ID = customers.cvustomer_ID "+
-	            		" ORDER BY Customer_ID";
-	            System.out.println(query);
+	            		" ORDER BY bill_number";
+	          //  System.out.println(query);
 
 	            // Execute the query and get the result set, which contains
 	            // all the results returned from the database.
@@ -64,7 +64,7 @@ public class sqltable_read {
 	            // For other types of columns, such as boolean or Date, we use the appropriate methods.
 	            
 	            ArrayList<customerModel> customer_table_to_db = new ArrayList<customerModel> ();
-	            
+	           // System.out.println(resultSet);
 	            
 	            while (resultSet.next()) {
 	            	
@@ -84,6 +84,7 @@ public class sqltable_read {
            		int quantity=resultSet.getInt("quantity");
            		int  each_billing_time_purchase_amount=resultSet.getInt("each billing time purchase amount");
            		int unit_price=resultSet.getInt("unit_price");
+           		int bill_number=resultSet.getInt("bill_number");
            		 
            		
            		customerModel each_customer_details = new customerModel();
@@ -98,6 +99,7 @@ public class sqltable_read {
            		each_customer_details.setEach_billing_time_purchase_amount_id(each_billing_time_purchase_amount);
            		each_customer_details.setPhone(phone);
            		each_customer_details.setUnit_price(unit_price);
+           		each_customer_details.setBill_number(bill_number);
 //           		each_customer_details.setGender(gender);
           		each_customer_details.setCreated_date(cust_created_date);
            		//forgot add
@@ -107,62 +109,83 @@ public class sqltable_read {
            		
 	            }
 
+//	          }
+//	         
 
-	            Comparator<customerModel> custom_compaator =  new Comparator<customerModel>(){
-		             public int compare(customerModel one, customerModel two) {
-                          ///////////////////////////////////////////
-                          if(MAIN.args_inputs[1].equals("created_date")) {
-                        	  if (one.getCreated_date() == null || two.getCreated_date() == null) {
-  		            	        return 0;
-                        	  }
-		            	      return one.getCreated_date().compareTo(two.getCreated_date());
-		            	      }
-                          ///////////////////////////////////////////////////////////
-                          if(MAIN.args_inputs[1].equals("updated_date")) {
-                        	  if (one.getUpdated_date() == null || two.getUpdated_date() == null) {
-    		            	        return 0;
-                          	  }
-		            	      return one.getUpdated_date().compareTo(two.getUpdated_date());
-		            	      }
-                          ///////////////////////////////////////////////////////////////
-                          if(MAIN.args_inputs[1].equals("Customer_ID")) {
-		            	      return new Integer(one.getCustomer_ID()).compareTo(new Integer(two.getCustomer_ID()));
-		            	      }
-                          if(MAIN.args_inputs[1].equals("created_date")) {
-		            	      return one.getAddress().compareTo(two.getAddress());
-		            	      }
-                          if(MAIN.args_inputs[1].equals("created_date")) {
-		            	      return one.getAddress().compareTo(two.getAddress());
-		            	      }
-                          if(MAIN.args_inputs[1].equals("created_date")) {
-		            	      return one.getAddress().compareTo(two.getAddress());
-		            	      }
-                          if(MAIN.args_inputs[1].equals("created_date")) {
-		            	      return one.getAddress().compareTo(two.getAddress());
-		            	      }
-                          
-                          return 0;
-		        	
-	            }};
+//	            Comparator<customerModel> custom_compaator =  new Comparator<customerModel>(){
+//		             public int compare(customerModel one, customerModel two) {
+//                          ///////////////////////////////////////////
+//                          if(MAIN.args_inputs[1].equals("created_date")) {
+//                        	  if (one.getCreated_date() == null || two.getCreated_date() == null) {
+//  		            	        return 0;
+//                        	  }
+//		            	      return one.getCreated_date().compareTo(two.getCreated_date());
+//		            	      }
+//                          ///////////////////////////////////////////////////////////
+//                          if(MAIN.args_inputs[1].equals("updated_date")) {
+//                        	  if (one.getUpdated_date() == null || two.getUpdated_date() == null) {
+//    		            	        return 0;
+//                          	  }
+//		            	      return one.getUpdated_date().compareTo(two.getUpdated_date());
+//		            	      }
+//                          ///////////////////////////////////////////////////////////////
+//                          if(MAIN.args_inputs[1].equals("Customer_ID")) {
+//		            	      return new Integer(one.getCustomer_ID()).compareTo(new Integer(two.getCustomer_ID()));
+//		            	      }
+//                          ///////////////////////////////////////////////////
+//                          if(MAIN.args_inputs[1].equals("address")) {
+//		            	      return  one.getAddress().compareTo(two.getAddress());
+//		            	      }
+//                          ///////////////////////////////////////////////////
+//                          if(MAIN.args_inputs[1].equals("first_name")) {
+//		            	      return  one.getFirst_name().compareTo(two.getFirst_name());
+//		            	      }
+//                          /////////////////////////////////////////////////
+//                          if(MAIN.args_inputs[1].equals("last_name")) {
+//		            	      return one.getLast_name().compareTo(two.getLast_name());
+//		            	      }
+//                          //////////////////////////////////////////////
+//                          if(MAIN.args_inputs[1].equals("emaile")) {
+//		            	      return one.getEmaile().compareTo(two.getEmaile());
+//		            	      }
+//                          ///////////////////////////////////////
+//                          if(MAIN.args_inputs[1].equals("item_id")) {
+//		            	      return new Integer(one.getItem_id()).compareTo(new Integer(two.getItem_id()));
+//		            	      }
+//                          if(MAIN.args_inputs[1].equals("unit_price")) {
+//		            	      return new Integer(one.getUnit_price()).compareTo(new Integer(two.getUnit_price()));
+//		            	      }
+//                          if(MAIN.args_inputs[1].equals("phone")) {
+//		            	      return new Integer(one.getEach_billing_time_purchase_amount_id()).compareTo(new Integer(two.getEach_billing_time_purchase_amount_id()));
+//		            	      }
+//                          if(MAIN.args_inputs[1].equals("quantity")) {
+//		            	      return new Integer(one.getQuantity()).compareTo(new Integer(two.getQuantity()));
+//		            	      }
+//                          else{
+//                          return 0;
+//                          }
+//	            }};
 
 	            
 	            //To Sorty by First name
 	            //https://stackoverflow.com/a/47907804/4491572
-	            Collections.sort(customer_table_to_db,custom_compaator);
+	        //    Collections.sort(customer_table_to_db,custom_compaator);
 	            
-	            
-	            
-	         for(customerModel customer_obj :customer_table_to_db ) {
-	            System.out.println(customer_obj);
-	          }
+
+//	          }
 	         
 	         
 
-		        		  Collections.sort(customer_table_to_db,custom_compaator);
-		        	      for(customerModel customer_obj :customer_table_to_db ) {
-		               System.out.println(customer_obj);
-		     	          }
-
+		        		  Collections.sort(customer_table_to_db);
+		        		    arrayTohashmap obj  =   new arrayTohashmap();
+		
+		        		  System.out.println(new pdf_logic().billing_details(customer_table_to_db));
+		        		  
+		        		  
+//		        	      for(customerModel customer_obj :customer_table_to_db) {
+//		               System.out.println(customer_obj);
+//		     	          }
+		  	        
 	        } catch (ClassNotFoundException e) {
 	            e.printStackTrace();
 	        } catch (SQLException e) {

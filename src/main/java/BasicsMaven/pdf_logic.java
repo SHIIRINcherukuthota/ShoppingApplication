@@ -14,14 +14,20 @@ for (int i=0;i<=billing_details.size();i++){
 	if ((i==0) &&(billing_details.get(i).getBill_number() != billing_details.get(i+1).getBill_number())){
 		total_details.setBill_number(billing_details.get(i).getBill_number());
 		total_details.setTotal_sum(billing_details.get(i).getEach_billing_time_purchase_amount_id());
-
+System.out.println(i );
+System.out.println(total_details );
 		abc.add(total_details);
+		continue;
 	}
 	
 	if ((billing_details.get(i).getBill_number() != billing_details.get(i+1).getBill_number())&&(billing_details.get(i-1).getBill_number() != billing_details.get(i).getBill_number())){
 		total_details.setBill_number(billing_details.get(i).getBill_number());
 		total_details.setTotal_sum(billing_details.get(i).getEach_billing_time_purchase_amount_id());	
 		abc.add(total_details);
+		System.out.println(i );
+		
+		System.out.println(total_details );
+		continue;
 	}
 	
 if ((billing_details.get(i).getBill_number() != billing_details.get(i+1).getBill_number())&&(billing_details.get(i-1).getBill_number() == billing_details.get(i).getBill_number())) {
@@ -33,14 +39,26 @@ if ((billing_details.get(i).getBill_number() != billing_details.get(i+1).getBill
 		for (int j = startIndex; j <= endIndex; j++) {
 			abc.add(total_details);
 		}
-
+		System.out.println(i );
+		System.out.println(total_details );
 		startIndex = i+1;
 		sumForsame=0;
+		
 		continue;
 	}
 if (billing_details.get(i).getBill_number() == billing_details.get(i+1).getBill_number()) {
 	sumForsame=billing_details.get(i).getEach_billing_time_purchase_amount_id()+billing_details.get(i+1).getEach_billing_time_purchase_amount_id();
+	System.out.println(i );
+	System.out.println(total_details );
     continue;
+}
+if (i==billing_details.size()-1){
+	if (billing_details.get(i).getBill_number() != billing_details.get(i-1).getBill_number()){
+		sumForsame=billing_details.get(i).getEach_billing_time_purchase_amount_id();
+	}
+	if (billing_details.get(i).getBill_number() == billing_details.get(i-1).getBill_number()){
+		
+	}
 }
 
 }

@@ -9,7 +9,7 @@ import java.util.TreeSet;
 public class arrayTohashmap {
 	HashMap<Integer, ArrayList<customerModel>> hashmap_with_keyas_bill_number = new HashMap<Integer, ArrayList<customerModel>>();
 
-	public int identical_billnumber_find(ArrayList<customerModel> customer_table_to_db) {
+	public HashMap<Integer, ArrayList<customerModel>> identical_billnumber_find(ArrayList<customerModel> customer_table_to_db) {
 		int startIndex = 0;
 		int endIndex = 0;
 		int sizeOfhashmap=0;
@@ -42,9 +42,8 @@ public class arrayTohashmap {
 			}
 
 		}
-		
-		sizeOfhashmap=hashmap_with_keyas_bill_number.size();
-	return 	sizeOfhashmap;
+new pdf_ceation().pdf_insert_data(hashmap_with_keyas_bill_number);	
+	return 	hashmap_with_keyas_bill_number;
 	}
 
 }

@@ -178,14 +178,15 @@ public class sqltable_read  {
 
 		        		  Collections.sort(customer_table_to_db);
 		        		    arrayTohashmap obj  =   new arrayTohashmap();
-		
-		        		  System.out.println(new pdf_logic().billing_details(customer_table_to_db));
+		        		    obj.identical_billnumber_find(customer_table_to_db);
+//		        		    ArrayList<pojp_for_totalSum>lol= new ArrayList<pojp_for_totalSum> ();	
+//		        		    lol=	new pdf_logic().billing_details(customer_table_to_db);
+//		        		  
 		        		  
-		        		  
-//		        	      for(customerModel customer_obj :customer_table_to_db) {
-//		               System.out.println(customer_obj);
-//		     	          }
-		  	        
+//	        	      for(pojp_for_totalSum customer_obj :lol) {
+//	               System.out.println(customer_obj);
+//	     	          }
+//		  	        
 	        } catch (ClassNotFoundException e) {
 	            e.printStackTrace();
 	        } catch (SQLException e) {

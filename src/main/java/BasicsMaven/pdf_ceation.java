@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,107 +28,122 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class pdf_ceation {
 //	private static final String FILE_NAME = "/Users/venkatabalasumalisetty/Desktop/learning_email.pdf";
+	
 	public void pdf_insert_data(HashMap<Integer, ArrayList<customerModel>> hashmap_with_keyas_bill_number ){
 
-		Document document = new Document();
+		  
 	
-
-     try {
-    	 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-    	 Date date = null;
 		
-    	 ArrayList< customerModel>eachValueForTheKey = new ArrayList<>();
+     try {
+//    	 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//    	 Date date = null;
+		
+		int j= hashmap_with_keyas_bill_number.keySet().size();;
+    	 ArrayList< customerModel>eachValueForTheKey = new ArrayList<customerModel>();
     	 for(Integer bill :hashmap_with_keyas_bill_number.keySet()){
-    		 
-    		 String strDate ="/Users/venkatabalasumalisetty/Documents/pdf_folder/abc"+".pdf";
+    		 int sum=0;
+    		 Document document = new Document();
+    		 String strDate ="/Users/viswanathanakkinti/Desktop/PDF-files_learning/testData_"+String.valueOf(bill)+".pdf";
      		PdfWriter.getInstance(document, new FileOutputStream(new File(strDate)));
               document.open();
               Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.BOLD);  
               Font regularFont = new Font(Font.FontFamily.TIMES_ROMAN, 10); 
               Font illaticfont = new Font (Font.FontFamily.TIMES_ROMAN,10, Font.ITALIC);
     		int eachTransactionValue=0;
-    		int sum=0;
+    		
     		 eachValueForTheKey=hashmap_with_keyas_bill_number.get(bill);
-    		System.out.println(eachValueForTheKey); 
+    		System.out.println("currently processing    "+bill+"    out of   "+j); 
+    		j--;
+    		
+    		
+            ///////////////////// bill number  and bill date///////////////
+            
+            PdfPTable table = new PdfPTable(2);
+            float[] columnWidths = new float[]{15f, 40f};
+            table.setWidths(columnWidths);
+
+           
+            PdfPCell cell1;            
+            cell1 = new PdfPCell(new Phrase("Bill Number: "+bill));
+            cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
+//            cell.setBorder(Rectangle.NO_BORDER);
+            cell1.setBorderColor(BaseColor.WHITE);
+            table.addCell(cell1);
+            
+            
+           
+//            cell.setBorder(Rectangle.OUT_BOTTOM);
+    
+           
+        
+           
+            
+            table.setSpacingBefore(15f);
+            table.setSpacingAfter(0f);
+            
+    		
+    		
+    		
+            
+            PdfPTable table1 = new PdfPTable(7);
+            PdfPCell cell;            
+       
+            table1.setSpacingBefore(15f);
+            table1.setSpacingAfter(15f);
+            float[] columnWidths1 = new float[]{10f, 25f, 40f, 25f,13f,10f,10f};
+            table1.setWidths(columnWidths1);
+            
+            
+            cell = new PdfPCell(new Phrase("Sr.No",boldFont));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.PINK);
+            table1.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Customer Detials",boldFont));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.PINK);
+            table1.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Email",boldFont));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.PINK);
+           table1.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Phone",boldFont));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);         
+            cell.setBackgroundColor(BaseColor.PINK);
+            table1.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Quantity",boldFont));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.PINK);
+            table1.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Unit Price",boldFont));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.PINK);
+            table1.addCell(cell);
+            
+            cell = new PdfPCell(new Phrase("Unit Total",boldFont));
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            cell.setBackgroundColor(BaseColor.PINK);
+            table1.addCell(cell);
+    		
+    		
+    		
     		for (int i = 0; i < eachValueForTheKey.size(); i++) {
-          
+       if (i==0) {
+    	   
+    	   cell1 = new PdfPCell(new Phrase("Bill Date: " + new SimpleDateFormat( "MM/dd/yyyy HH:mm:ss" ).format(eachValueForTheKey.get(i).getUpdated_date()) ));
+           cell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
+           cell1.setBorderColor(BaseColor.WHITE);
+           table.addCell(cell1); 
+       }
              eachTransactionValue=eachValueForTheKey.get(i).getEach_billing_time_purchase_amount_id();
              sum=sum+eachTransactionValue;
-        String date1 = (String.valueOf(eachValueForTheKey.get(i).getUpdated_date()));
-             ///////////////////// bill number  and bill date///////////////
-             
-             PdfPTable table = new PdfPTable(2);
-             float[] columnWidths = new float[]{15f, 40f};
-             table.setWidths(columnWidths);
-
-             Style style = new Style()
-            		    .setBorder(Border.NO_BORDER)
-            		    .setFont(tfont);
-             PdfPCell cell;            
-             cell = new PdfPCell(new Phrase("Bill Number: "+bill));
-             cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-             cell.setBorder(Border.NO_BORDER);
-        
-             table.addCell(cell);
-             
-             
-            cell = new PdfPCell(new Phrase("Bill Date: "+date1));
-             cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-             cell.setBorder(Rectangle.OUT_BOTTOM);
-     
-             table.addCell(cell);
-         
-             document.add(table);
-//////////////////////actual table//////////////
-             
-             
-             table.setSpacingBefore(15f);
-             table.setSpacingAfter(12.5f);
 
              
-             
-             PdfPTable table1 = new PdfPTable(7);
-             
-             table1.setSpacingBefore(15f);
-             table1.setSpacingAfter(12.5f);
-             float[] columnWidths1 = new float[]{10f, 25f, 40f, 25f,13f,10f,10f};
-             table1.setWidths(columnWidths1);
-             
-             
-             cell = new PdfPCell(new Phrase("Sr.No",boldFont));
-             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-             cell.setBackgroundColor(BaseColor.GREEN);
-             table1.addCell(cell);
-             
-             cell = new PdfPCell(new Phrase("Customer Detials",boldFont));
-             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-             cell.setBackgroundColor(BaseColor.GREEN);
-             table1.addCell(cell);
-             
-             cell = new PdfPCell(new Phrase("Email",boldFont));
-             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-             cell.setBackgroundColor(BaseColor.GREEN);
-            table1.addCell(cell);
-             
-             cell = new PdfPCell(new Phrase("Phone",boldFont));
-             cell.setHorizontalAlignment(Element.ALIGN_CENTER);         
-             cell.setBackgroundColor(BaseColor.GREEN);
-             table1.addCell(cell);
-             
-             cell = new PdfPCell(new Phrase("Quantity",boldFont));
-             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-             cell.setBackgroundColor(BaseColor.GREEN);
-             table1.addCell(cell);
-             
-             cell = new PdfPCell(new Phrase("Unit Price",boldFont));
-             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-             cell.setBackgroundColor(BaseColor.GREEN);
-             table1.addCell(cell);
-             
-             cell = new PdfPCell(new Phrase("Unit Total",boldFont));
-             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-             cell.setBackgroundColor(BaseColor.GREEN);
-             table1.addCell(cell);
+            
              
              cell = new PdfPCell(new Phrase(String.valueOf(i+1),regularFont));
              cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -158,44 +175,90 @@ public class pdf_ceation {
              cell.setHorizontalAlignment(Element.ALIGN_CENTER);
              table1.addCell(cell);
              
-             document.add(table1);
-             
-             //////////////////////sum table///////////////
-             
-             PdfPTable table2 = new PdfPTable(2);
-             table2.setHorizontalAlignment(Element.ALIGN_LEFT);
-             table2.setWidthPercentage(160 / 5.23f);
-             
-             cell = new PdfPCell(new Phrase("Sum"));
-             table2.addCell(cell);
-             
-             cell = new PdfPCell(new Phrase(String.valueOf(sum)));
-             table2.addCell(cell);
-             document.add(table2);
              
              
-            //////////thank you ///////////////////////// 
-             
-             
-             Paragraph p = new Paragraph();
-	         p.add("************************    Thank you Visit Again********************************");
-	         p.setAlignment(Element.ALIGN_CENTER);
-             document.add(p);
-             document.close();
-             //////////////image///////////
+            
+
+            
+
+            
+            
 
     		}
+    		 document.add(table);
+    		
+    		document.add(table1);
+    		
+            
+            
+   		 //////////////////////sum table///////////////
+    		 PdfPCell cell2; 
+           PdfPTable table2 = new PdfPTable(7);
+           table2.setSpacingAfter(60f);
+           //table2.setHorizontalAlignment(Element.ALIGN_RIGHT);
+           float[] columnWidths2 = new float[]{10f, 25f, 40f, 25f,13f,10f,10f};
+           table2.setWidths(columnWidths2);
+           
+           
+           cell2 = new PdfPCell(new Phrase(""));
+           cell2.setBorderColor(BaseColor.WHITE);
+           table2.addCell(cell2);
+           
+           
+           cell2 = new PdfPCell(new Phrase(""));
+           cell2.setBorderColor(BaseColor.WHITE);
+           table2.addCell(cell2);
+           
+           
+           cell2 = new PdfPCell(new Phrase(""));
+           cell2.setBorderColor(BaseColor.WHITE);
+           table2.addCell(cell2);
+           
+           cell2 = new PdfPCell(new Phrase(""));
+           cell2.setBorderColor(BaseColor.WHITE);
+           table2.addCell(cell2);
+           
+           cell2 = new PdfPCell(new Phrase(""));
+           cell2.setBorderColor(BaseColor.WHITE);
+           table2.addCell(cell2);
+           
+           cell2 = new PdfPCell(new Phrase("Sum"));
+           table2.addCell(cell2);
+           
+           cell2 = new PdfPCell(new Phrase(String.valueOf(sum)));
+           table2.addCell(cell2);
+           document.add(table2);
+           
+           
+         
+   		
+   		 //////////thank you ///////////////////////// 
+           
+           
+           Paragraph p = new Paragraph();
+           p.setSpacingAfter(50f);
+	         p.add("************************    Thank you Visit Again********************************");
+	         p.setAlignment(Element.ALIGN_CENTER);
+           document.add(p);
+           
+           //////////////image///////////
 
-             
-             
+           Image image =Image.getInstance("father-teresa.png");
+          image.scaleAbsolute(70f, 70f);
+           image.setAlignment(Element.ALIGN_CENTER);
+        
+           document.add(image);
+//            
+    		 document.close();      
     		
     	 }
-    	 
+    
         
          //open
         
-
+   	  
          System.out.println("Done");
+        
       
      } catch (FileNotFoundException | DocumentException e) {
          e.printStackTrace();

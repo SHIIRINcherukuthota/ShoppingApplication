@@ -173,8 +173,7 @@ public class sqltable_read  {
 	            
 
 //	          }
-	         
-	         
+	        
 
 		        		  Collections.sort(customer_table_to_db);
 		        		    arrayTohashmap obj  =   new arrayTohashmap();
@@ -188,9 +187,11 @@ public class sqltable_read  {
 //	     	          }
 //		  	        
 	        } catch (ClassNotFoundException e) {
-	            e.printStackTrace();
+	            //e.printStackTrace();
+	            System.out.println(e);
 	        } catch (SQLException e) {
-	            e.printStackTrace();
+	            //e.printStackTrace();
+	            System.out.println(e);
 	        } finally {
 	            // We have to close the connection and release the resources used.
 	            // Closing the statement results in closing the resultSet as well.
@@ -198,6 +199,7 @@ public class sqltable_read  {
 	                 if(stmt!=null)
 	                    conn.close();
 	              }catch(SQLException se){
+	            	  System.err.println(se);
 	              }// do nothing
 	              try{
 	                 if(conn!=null)

@@ -26,13 +26,14 @@ public class MAIN {
 	   if(args_inputs[0].equals("read_from_database")){
 		   
 		   long lStartTime = System.nanoTime();
-
-		   System.out.println(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").format(LocalDateTime.now()));  
-		   new sqltable_read().DB_read_controller();
-		   System.out.println(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").format(LocalDateTime.now()));  
-
-		    long lEndTime = System.nanoTime();
-		;
+		   
+		   /////////
+		   
+		   new sqltable_read().DB_read_controller(); 
+		   
+		   ///////////////
+		   long lEndTime = System.nanoTime();
+		    
 		    System.out.println("Total time taken to complete read process: "+((double)(lEndTime - lStartTime) / 1_000_000_000));
 		   
 	   }

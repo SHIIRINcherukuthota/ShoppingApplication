@@ -59,7 +59,7 @@ public class db_controllerForApi {
 	            int unit_price=0;
 	            while (resultSet.next()) {
 	            	
-	            	
+	            	//
 	            customer_ID  = resultSet.getInt("customer_ID");
                 address = resultSet.getString("address");
 	             emaile = resultSet.getString("email");

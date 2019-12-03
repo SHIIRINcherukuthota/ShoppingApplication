@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
@@ -40,6 +41,8 @@ public class apistart {
 	        server.createContext("/getusers", (HttpHandler) new hhtpRequestParser());
 	        server.createContext("/getaddresses", new hhtpRequestParser());
 	        server.createContext("/getbillnumber", new hhtpRequestParser());
+	        //generic_post
+	        server.createContext("/generic_post", new hhtpRequestParser());
 	        server.setExecutor(java.util.concurrent.Executors.newCachedThreadPool()); //Uses New Thread every time
 	        server.start();
 	        System.out.println("Server Started at 8000...");
@@ -126,7 +129,18 @@ public class apistart {
 	                os.close();
 	            }
 	            
-	            
+	            if (path.equals("/generic_post")&& reqandresoponse.getRequestMethod().equals("POST")) {
+	            	 reqandresoponse.getResponseHeaders().set("Content-Type", "application/json");
+		             reqandresoponse.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+		             reqandresoponse.getResponseHeaders().set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		             JSONArray res = new db_controllerForApi().getJSONfromDB(body.getString("query"));
+		             String json = res.toString();
+		             reqandresoponse.sendResponseHeaders(200, json.length());
+		                OutputStream os = reqandresoponse.getResponseBody();
+		                os.write(json.getBytes());
+		                os.close();
+	            	
+	            }
 	            if (path.equals("/getbillnumber")&& reqandresoponse.getRequestMethod().equals("POST")) {
 	                //Your Logic
 	                //Use any other Library - I use GSON

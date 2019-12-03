@@ -10,6 +10,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.gson.JsonArray;
+import com.google.gson.annotations.JsonAdapter;
+import com.mysql.jdbc.ResultSetMetaData;
+
 public class db_controllerForApi {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://remotemysql.com/4sgeFlzuqF";
@@ -17,6 +25,37 @@ public class db_controllerForApi {
 	// Database credentials
 	static final String USER = "4sgeFlzuqF";
 	static final String PASS = "j5h4ZV0cyS";
+	
+	public JSONArray getJSONfromDB (String query) {
+		 	Connection conn = null;
+		   Statement stmt = null; 
+		try{
+		      //STEP 2: Register JDBC driver
+		      Class.forName("com.mysql.jdbc.Driver");
+
+		      //STEP 3: Open a connection
+		    //  System.out.println("Connecting to a selected database...");
+		      conn = DriverManager.getConnection(DB_URL, USER, PASS);
+		     // System.out.println("Connected database successfully...");
+		      
+		      //STEP 4: Execute a query
+		     
+		      stmt = conn.createStatement();
+		      
+		      if(query.toUpperCase().contains("CREATE")||query.toUpperCase().contains("INSERT")) {
+		    	  int resultSet = stmt.executeUpdate(query);
+		    	  
+		      }else {
+  	            ResultSet resultSet = stmt.executeQuery(query);
+		      }
+	           JSONArray js_a_res = getJsonArrayfromSqlResultset(resultSet);
+	           return js_a_res;}catch (Exception e) {
+				// TODO: handle exception
+	        	   e.printStackTrace();
+			}
+		return null;
+	}
+	
 
 	public  HashMap<Integer, ArrayList<customerModel>> APIDB_read_controller(String query2 ) {
 			
@@ -42,8 +81,8 @@ public class db_controllerForApi {
 		   String query=query2;
 
    	            ResultSet resultSet = stmt.executeQuery(query);
-	 
-	            
+	      
+	           JSONArray js_a_res = getJsonArrayfromSqlResultset(resultSet);
 	            ArrayList<customerModel> customer_table_to_db = new ArrayList<customerModel> ();
 	           // System.out.println(resultSet);
 	            int bill_number = 0;
@@ -59,7 +98,8 @@ public class db_controllerForApi {
 	            int unit_price=0;
 	            while (resultSet.next()) {
 	            	
-	            	//
+	            	
+	            	//Ignore 
 	            customer_ID  = resultSet.getInt("customer_ID");
                 address = resultSet.getString("address");
 	             emaile = resultSet.getString("email");
@@ -148,6 +188,36 @@ public class db_controllerForApi {
 		}
 		return valueMetaData;
 	}
+	
+	public JSONArray getJsonArrayfromSqlResultset(ResultSet rs) {
+		JSONArray json = new JSONArray();
+		ResultSetMetaData rsmd = null;
+		try {
+			rsmd = (ResultSetMetaData) rs.getMetaData();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			while(rs.next()) {
+			  int numColumns = rsmd.getColumnCount();
+			  JSONObject obj = new JSONObject();
+			  for (int i=1; i<=numColumns; i++) {
+			    String column_name = rsmd.getColumnName(i);
+			    obj.put(column_name, rs.getObject(column_name));
+			  }
+			  json.put(obj);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return json;
+	}
+	
 }
 	
 	

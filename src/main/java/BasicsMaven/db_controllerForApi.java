@@ -29,6 +29,7 @@ public class db_controllerForApi {
 	public JSONArray getJSONfromDB (String query) {
 		 	Connection conn = null;
 		   Statement stmt = null; 
+		   JSONArray js_a_res = null;
 		try{
 		      //STEP 2: Register JDBC driver
 		      Class.forName("com.mysql.jdbc.Driver");
@@ -42,14 +43,18 @@ public class db_controllerForApi {
 		     
 		      stmt = conn.createStatement();
 		      
-		      if(query.toUpperCase().contains("CREATE")||query.toUpperCase().contains("INSERT")) {
+		      if((query.toUpperCase().contains("CREATE"))||(query.toUpperCase().contains("INSERT"))) {
 		    	  int resultSet = stmt.executeUpdate(query);
+		    	  js_a_res = new JSONArray(resultSet);
 		    	  
 		      }else {
   	            ResultSet resultSet = stmt.executeQuery(query);
+  	          js_a_res = getJsonArrayfromSqlResultset(resultSet);
 		      }
-	           JSONArray js_a_res = getJsonArrayfromSqlResultset(resultSet);
-	           return js_a_res;}catch (Exception e) {
+	           
+		      
+	           return js_a_res;
+	           }catch (Exception e) {
 				// TODO: handle exception
 	        	   e.printStackTrace();
 			}
